@@ -1,47 +1,71 @@
 "use client";
-import { siteData } from "../data/siteData";
+import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { siteData } from "../data/siteData";
 
 export default function ServiceGrid() {
-  return (
-    <section id="services" className="py-24 px-6 bg-wegrow-darker">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
-          <div>
-            <div className="text-wegrow-lime text-xs font-bold tracking-widest uppercase mb-2">What We Do</div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white uppercase leading-[0.95]" style={{ fontFamily: "'DIN Condensed', sans-serif" }}>
-              Our Services
-            </h2>
-          </div>
-          <p className="text-white/60 text-sm md:text-base max-w-sm leading-relaxed">
-            Agricultural and land management contracting across {siteData.location} and the surrounding region.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {siteData.services.map((service) => (
-            <div key={service.title} className="group p-8 border border-white/5 hover:border-wegrow-lime/30 bg-wegrow-card hover:bg-white/5 transition-all duration-300 rounded-3xl hover:shadow-2xl hover:shadow-wegrow-lime/5">
-              <div className="text-[0.65rem] font-bold tracking-widest text-wegrow-lime mb-6">{service.num}</div>
-              <h3 className="text-xl font-bold text-white uppercase tracking-wide mb-4 group-hover:text-wegrow-lime transition-colors" style={{ fontFamily: "'DIN Condensed', sans-serif" }}>
-                {service.title}
-              </h3>
-              <p className="text-white/60 text-sm leading-relaxed mb-4">{service.short}</p>
-              <p className="text-white/40 text-xs leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-0 group-hover:h-auto overflow-hidden">
-                {service.detail}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-16 flex flex-wrap items-center gap-6">
-          <Link href="/booking" className="px-8 py-4 bg-wegrow-lime hover:bg-white text-wegrow-dark font-bold rounded-full transition-all">
-            Request a Quote
-          </Link>
-          <a href={`tel:${siteData.phone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition-colors">
-            Or call us directly: <span className="text-wegrow-lime font-bold">{siteData.phone}</span>
-          </a>
-        </div>
-      </div>
-    </section>
-  );
+    const { services } = siteData;
+    return (
+          <section id="services" className="bg-stone-50">
+                <div className="mx-auto max-w-7xl px-5 sm:px-8 py-20 md:py-28">
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+                                  <div>
+                                              <span className="text-[11px] uppercase tracking-[0.28em] text-forest-700 font-semibold">
+                                                            What we do
+                                              </span>span>
+                                              <h2 className="mt-3 font-display font-extrabold text-3xl md:text-5xl text-forest-950 tracking-tight max-w-2xl">
+                                                            Tree and land services across Taunton.
+                                              </h2>h2>
+                                  </div>div>
+                                  <p className="max-w-md text-charcoal-800/80">
+                                              One contractor for the whole job — from surveying and felling to splitting, stacking and clearing.
+                                  </p>p>
+                        </div>div>
+                
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                          {services.map((s, i) => (
+                        <motion.article
+                                        key={s.slug}
+                                        initial={{ opacity: 0, y: 18 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, amount: 0.25 }}
+                                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: (i % 3) * 0.06 }}
+                                        className="group card-lift relative overflow-hidden rounded-2xl border border-forest-900/10 bg-cream-50"
+                                      >
+                                      <div className="relative aspect-[4/3] zoom-img">
+                                                      <Image
+                                                                          src={s.image}
+                                                                          alt={s.title}
+                                                                          fill
+                                                                          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                                                                          className="object-cover"
+                                                                        />
+                                                      <div className="absolute inset-0 bg-gradient-to-t from-forest-950/55 via-forest-950/10 to-transparent" />
+                                                      <span className="absolute top-4 left-4 text-[10px] uppercase tracking-[0.28em] bg-cream-50/90 text-forest-950 px-2.5 py-1 rounded-full">
+                                                        {String(i + 1).padStart(2, "0")}
+                                                      </span>span>
+                                      </div>div>
+                                      <div className="p-6">
+                                                      <h3 className="font-display font-bold text-xl text-forest-950 tracking-tight">
+                                                        {s.title}
+                                                      </h3>h3>
+                                                      <p className="mt-2 text-sm text-charcoal-800/80 leading-relaxed">
+                                                        {s.short}
+                                                      </p>p>
+                                                      <Link
+                                                                          href="/booking"
+                                                                          className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-forest-800 group-hover:text-forest-600 transition-colors"
+                                                                        >
+                                                                        Get a quote
+                                                                        <span className="arrow-shift" aria-hidden>→</span>span>
+                                                      </Link>Link>
+                                      </div>div>
+                        </motion.article>motion.article>
+                      ))}
+                        </div>div>
+                </div>div>
+          </section>section>
+        );
 }
+</section>

@@ -1,188 +1,81 @@
-"use client";
-import { useActionState, useState } from "react";
-import Nav from "../components/Nav";
+import type { Metadata } from "next";
+import Image from "next/image";
+import BookingForm from "../components/BookingForm";
 import Footer from "../components/Footer";
-import Link from "next/link";
 import { siteData } from "../data/siteData";
 
-// ─────────────────────────────────────────────────────────────
-// IMPORTANT: Replace YOUR_FORM_ID below with your Formspree ID.
-// ─────────────────────────────────────────────────────────────
-const FORM_ID = "YOUR_FORM_ID";
-
-async function submitBookingAction(prevState: any, formData: FormData) {
-  const data = {
-    name: formData.get("name"),
-    phone: formData.get("phone"),
-    email: formData.get("email"),
-    service: formData.get("service"),
-    location: formData.get("location"),
-    size: formData.get("size"),
-    preferredDate: formData.get("date"),
-    message: formData.get("message"),
-    _subject: `New enquiry from ${formData.get("name")} — ${formData.get("service")}`,
-  };
-
-  if (!data.name || !data.phone || !data.service) {
-    return { error: "Please complete your name, phone and service type." };
-  }
-
-  try {
-    const res = await fetch(`https://formspree.io/f/${FORM_ID}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (res.ok) {
-      return { success: true };
-    } else {
-      return { error: "Submission failed. Please try again or call us." };
-    }
-  } catch (e) {
-    return { error: "Something went wrong. Please call us directly." };
-  }
-}
+export const metadata: Metadata = {
+    title: "Book a Free Quote",
+    description:
+          "Book a free quote with GB Contracting for tree surgery, land clearance, log splitting or outdoor contracting in Taunton and surrounding areas.",
+};
 
 export default function BookingPage() {
-  const [state, formAction, isPending] = useActionState(submitBookingAction, null);
-  const [submittedName, setSubmittedName] = useState("");
-
-  if (state?.success) return (
-    <main className="min-h-screen bg-wegrow-dark">
-      <Nav />
-      <div className="min-h-[80vh] flex items-center justify-center px-6 py-20 text-center">
-        <div className="animate-fade-in">
-          <div className="w-20 h-20 rounded-full bg-wegrow-lime flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-wegrow-lime/20">
-            <svg className="w-10 h-10 text-wegrow-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-sans font-bold text-white tracking-tight mb-4">
-            Enquiry Sent
-          </h2>
-          <p className="text-white/60 text-lg max-w-sm mx-auto mb-10 leading-relaxed">
-            Thanks! We'll be in touch within 24 hours to discuss your project.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/" className="px-8 py-4 bg-wegrow-lime hover:bg-white text-wegrow-dark font-bold rounded-full transition-all">
-              Back to Home
-            </Link>
-            <a href={`tel:${siteData.phone.replace(/\s/g, '')}`} className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-full border border-white/10 transition-all">
-              Call Now
-            </a>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </main>
-  );
-
-  return (
-    <main className="bg-wegrow-dark min-h-screen text-white">
-      <Nav />
-
-      {/* Header */}
-      <section className="pt-32 pb-16 px-6">
-        <div className="max-w-3xl mx-auto">
-          <div className="inline-block px-3 py-1 bg-wegrow-lime/10 border border-wegrow-lime/30 rounded-full text-wegrow-lime text-xs font-bold tracking-widest uppercase mb-6">
-            Free Quote
-          </div>
-          <h1 className="text-5xl md:text-7xl font-sans tracking-tight leading-[0.9] mb-6">
-            Book a Service<br />
-            <span className="text-wegrow-lime font-serif italic font-light">or Get a Quote</span>
-          </h1>
-          <p className="text-white/60 text-lg max-w-xl leading-relaxed">
-            Fill in the form and we'll respond within 24 hours. Prefer to talk? Call <a href={`tel:${siteData.phone.replace(/\s/g, '')}`} className="text-wegrow-lime hover:text-white transition-colors font-bold">{siteData.phone}</a> directly.
-          </p>
-        </div>
-      </section>
-
-      {/* Form Section */}
-      <section className="pb-24 px-6">
-        <div className="max-w-3xl mx-auto">
-          <form action={formAction} className="space-y-8">
-            
-            {/* Contact Details */}
-            <div className="glass p-8 md:p-10 rounded-3xl space-y-6">
-              <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-wegrow-lime">Your Details</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-[0.65rem] font-bold uppercase tracking-widest text-white/50">Full Name *</label>
-                  <input name="name" type="text" required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-wegrow-lime transition-colors" placeholder="Your name" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[0.65rem] font-bold uppercase tracking-widest text-white/50">Phone Number *</label>
-                  <input name="phone" type="tel" required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-wegrow-lime transition-colors" placeholder="Your phone number" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[0.65rem] font-bold uppercase tracking-widest text-white/50">Email Address</label>
-                <input name="email" type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-wegrow-lime transition-colors" placeholder="your@email.com" />
-              </div>
-            </div>
-
-            {/* Project Details */}
-            <div className="glass p-8 md:p-10 rounded-3xl space-y-6">
-              <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-wegrow-lime">Project Details</h3>
-              
-              <div className="space-y-2">
-                <label className="text-[0.65rem] font-bold uppercase tracking-widest text-white/50">Service Required *</label>
-                <select name="service" required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-wegrow-lime transition-colors appearance-none cursor-pointer">
-                  <option value="" className="bg-wegrow-card">Select a service...</option>
-                  {siteData.services.map(s => <option key={s.title} value={s.title} className="bg-wegrow-card">{s.title}</option>)}
-                  <option value="Multiple" className="bg-wegrow-card">Multiple Services</option>
-                  <option value="Advice" className="bg-wegrow-card">Not Sure — Need Advice</option>
-                </select>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-[0.65rem] font-bold uppercase tracking-widest text-white/50">Location / Postcode</label>
-                  <input name="location" type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-wegrow-lime transition-colors" placeholder="e.g. Taunton, TA1" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[0.65rem] font-bold uppercase tracking-widest text-white/50">Approximate Size</label>
-                  <input name="size" type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-wegrow-lime transition-colors" placeholder="e.g. 2 acres, 50m hedge" />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-[0.65rem] font-bold uppercase tracking-widest text-white/50">Preferred Date</label>
-                <input name="date" type="date" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-wegrow-lime transition-colors [color-scheme:dark]" />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-[0.65rem] font-bold uppercase tracking-widest text-white/50">Additional Details</label>
-                <textarea name="message" rows={4} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-wegrow-lime transition-colors resize-none" placeholder="Tell us anything else about the job..."></textarea>
-              </div>
-            </div>
-
-            {state?.error && (
-              <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-400 text-sm animate-fade-in">
-                {state.error}
-              </div>
-            )}
-
-            <button 
-              type="submit" 
-              disabled={isPending}
-              className={`w-full py-5 rounded-full font-bold uppercase tracking-widest text-sm transition-all transform active:scale-95 ${
-                isPending ? "bg-white/10 text-white/50 cursor-not-allowed" : "bg-wegrow-lime hover:bg-white text-wegrow-dark shadow-2xl"
-              }`}
-            >
-              {isPending ? "Sending Enquiry..." : "Submit Request"}
-            </button>
-
-            <p className="text-center text-white/50 text-sm mt-6 leading-relaxed">
-              We respond to all enquiries within 24 hours.<br />
-              Need help faster? Call us: <a href={`tel:${siteData.phone.replace(/\s/g, '')}`} className="text-wegrow-lime font-bold">{siteData.phone}</a>
-            </p>
-          </form>
-        </div>
-      </section>
-
-      <Footer />
-    </main>
-  );
+    return (
+          <>
+                <section className="bg-stone-50">
+                        <div className="mx-auto max-w-7xl px-5 sm:px-8 pt-12 md:pt-20 pb-16 md:pb-24">
+                                  <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">
+                                              <div className="lg:col-span-5">
+                                                            <span className="text-[11px] uppercase tracking-[0.28em] text-forest-700 font-semibold">
+                                                                            Free quote
+                                                            </span>span>
+                                                            <h1 className="mt-3 font-display font-extrabold text-4xl md:text-5xl text-forest-950 tracking-tight">
+                                                                            Book a free quote with Mungo.
+                                                            </h1>h1>
+                                                            <p className="mt-5 text-charcoal-800/80 max-w-md">
+                                                                            Send a few details and GB Contracting will get back to you to discuss the job, arrange a visit, or provide a quote.
+                                                            </p>p>
+                                              
+                                                            <div className="mt-8 space-y-3">
+                                                                            <a
+                                                                                                href={`tel:${siteData.phoneTel}`}
+                                                                                                className="flex items-center justify-between rounded-2xl border border-forest-900/10 bg-cream-50 px-5 py-4 card-lift"
+                                                                                              >
+                                                                                              <div>
+                                                                                                                  <div className="text-xs uppercase tracking-[0.22em] text-forest-700 font-semibold">Call</div>div>
+                                                                                                                  <div className="mt-1 font-display font-bold text-forest-950 text-lg">{siteData.phoneDisplay}</div>div>
+                                                                                                </div>div>
+                                                                                              <span className="arrow-shift text-forest-700" aria-hidden>→</span>span>
+                                                                            </a>a>
+                                                                            <a
+                                                                                                href={`mailto:${siteData.email}`}
+                                                                                                className="flex items-center justify-between rounded-2xl border border-forest-900/10 bg-cream-50 px-5 py-4 card-lift"
+                                                                                              >
+                                                                                              <div>
+                                                                                                                  <div className="text-xs uppercase tracking-[0.22em] text-forest-700 font-semibold">Email</div>div>
+                                                                                                                  <div className="mt-1 font-display font-bold text-forest-950 text-lg break-all">
+                                                                                                                    {siteData.email}
+                                                                                                                    </div>div>
+                                                                                                </div>div>
+                                                                                              <span className="arrow-shift text-forest-700" aria-hidden>→</span>span>
+                                                                            </a>a>
+                                                                            <div className="flex items-center justify-between rounded-2xl border border-forest-900/10 bg-cream-50 px-5 py-4">
+                                                                                              <div>
+                                                                                                                  <div className="text-xs uppercase tracking-[0.22em] text-forest-700 font-semibold">Area</div>div>
+                                                                                                                  <div className="mt-1 font-display font-bold text-forest-950 text-lg">{siteData.area}</div>div>
+                                                                                                </div>div>
+                                                                            </div>div>
+                                                            </div>div>
+                                              
+                                                            <div className="mt-8 relative aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-forest-900/10 zoom-img">
+                                                                            <Image
+                                                                                                src="/log-stack.jpg"
+                                                                                                alt="GB Contracting stacked timber"
+                                                                                                fill
+                                                                                                sizes="(min-width: 1024px) 40vw, 100vw"
+                                                                                                className="object-cover"
+                                                                                              />
+                                                            </div>div>
+                                              </div>div>
+                                              <div className="lg:col-span-7">
+                                                            <BookingForm />
+                                              </div>div>
+                                  </div>div>
+                        </div>div>
+                </section>section>
+                <Footer />
+          </>>
+        );
 }
+</>

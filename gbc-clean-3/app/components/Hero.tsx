@@ -1,60 +1,114 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { siteData } from "../data/siteData";
 
 export default function Hero() {
-  return (
-    <section className="relative pt-40 pb-20 px-4 max-w-7xl mx-auto flex flex-col items-center text-center overflow-hidden">
-      {/* Title */}
-      <h1 className="text-white text-5xl md:text-7xl lg:text-8xl font-sans tracking-tight leading-[1.1] mb-6 max-w-4xl">
-        The only contracting <span className="font-serif italic font-light">service</span> you need
-      </h1>
-      
-      {/* Subtitle */}
-      <p className="text-wegrow-lime text-lg md:text-xl font-medium mb-12">
-        We're all about taking your property to the next level
-      </p>
-
-      {/* Buttons */}
-      <div className="flex flex-wrap justify-center gap-4 mb-24 relative z-10">
-        <Link href="/services" className="px-8 py-3.5 bg-white text-wegrow-dark font-bold rounded-full hover:scale-105 transition-transform">
-          View services
-        </Link>
-        <Link href="/booking" className="px-8 py-3.5 bg-transparent border border-white/20 text-white font-bold rounded-full hover:bg-white/5 transition-colors">
-          Book a quote
-        </Link>
-      </div>
-
-      {/* Graphic Container (Services/Preview Area) */}
-      <div className="w-full max-w-6xl mx-auto relative rounded-[2rem] md:rounded-[3rem] bg-[#d1d5db] aspect-[4/3] md:aspect-[21/9] overflow-hidden flex items-center justify-center group cursor-pointer shadow-2xl shadow-black/50">
-        {/* Placeholder 3D geometric shapes effect or branding */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/40 to-transparent" />
-        
-        {/* Abstract shapes representing pipes/materials */}
-        <div className="relative z-10 flex items-center justify-center gap-4 md:gap-8 transform transition-transform duration-700 group-hover:scale-105">
-          <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-[12px] md:border-[16px] border-wegrow-card shadow-[inset_0_10px_20px_rgba(0,0,0,0.5)] bg-gradient-to-br from-wegrow-dark to-wegrow-darker transform -rotate-12" />
-          <div className="w-20 h-20 md:w-28 md:h-28 rounded-full border-[12px] md:border-[16px] border-wegrow-card shadow-[inset_0_10px_20px_rgba(0,0,0,0.5)] bg-gradient-to-tr from-wegrow-dark to-wegrow-darker transform translate-y-8" />
-          
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-2">
-            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-wegrow-lime opacity-80" />
-            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-wegrow-lime" />
-            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-wegrow-lime opacity-60" />
-            <span className="text-3xl md:text-5xl font-bold lowercase tracking-tight text-wegrow-lime mix-blend-difference">gbcontracting</span>
-          </div>
-        </div>
-
-        {/* Badges in corners like the reference */}
-        <div className="absolute bottom-6 left-6 w-20 h-20 md:w-24 md:h-24 rounded-full border border-black/10 flex items-center justify-center bg-white/20 backdrop-blur-sm animate-spin-slow">
-          <span className="text-[10px] md:text-xs font-bold text-wegrow-dark text-center uppercase tracking-widest">
-            Award<br/>Winning
-          </span>
-        </div>
-        <div className="absolute bottom-6 right-6 w-20 h-20 md:w-24 md:h-24 rounded-full border border-black/10 flex items-center justify-center bg-white/20 backdrop-blur-sm">
-          <span className="text-[10px] md:text-xs font-bold text-wegrow-dark text-center uppercase tracking-widest">
-            Est.<br/>2015
-          </span>
-        </div>
-      </div>
-    </section>
-  );
+    const { hero } = siteData;
+    return (
+          <section className="relative isolate overflow-hidden bg-stone-50">
+                <div className="mx-auto max-w-7xl px-5 sm:px-8 pt-10 md:pt-16 pb-16 md:pb-24">
+                        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+                          {/* Copy */}
+                                  <div className="lg:col-span-6">
+                                              <motion.div
+                                                              initial={{ opacity: 0, y: 12 }}
+                                                              animate={{ opacity: 1, y: 0 }}
+                                                              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                                            >
+                                                            <span className="inline-flex items-center gap-2 rounded-full border border-forest-900/15 bg-cream-50 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-forest-900">
+                                                                            <span className="h-1.5 w-1.5 rounded-full bg-forest-700" />
+                                                              {hero.eyebrow}
+                                                            </span>span>
+                                              </motion.div>motion.div>
+                                              <motion.h1
+                                                              initial={{ opacity: 0, y: 16 }}
+                                                              animate={{ opacity: 1, y: 0 }}
+                                                              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                                                              className="mt-5 font-display font-extrabold text-forest-950 text-4xl sm:text-5xl lg:text-6xl leading-[1.02] tracking-[-0.02em]"
+                                                            >
+                                                {hero.h1}
+                                              </motion.h1>motion.h1>
+                                              <motion.p
+                                                              initial={{ opacity: 0, y: 16 }}
+                                                              animate={{ opacity: 1, y: 0 }}
+                                                              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.16 }}
+                                                              className="mt-6 max-w-xl text-base sm:text-lg text-charcoal-800/85 leading-relaxed"
+                                                            >
+                                                {hero.sub}
+                                              </motion.p>motion.p>
+                                              <motion.div
+                                                              initial={{ opacity: 0, y: 12 }}
+                                                              animate={{ opacity: 1, y: 0 }}
+                                                              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.24 }}
+                                                              className="mt-8 flex flex-wrap items-center gap-3"
+                                                            >
+                                                            <Link
+                                                                              href={hero.primaryCta.href}
+                                                                              className="group inline-flex items-center gap-2 rounded-full bg-forest-800 hover:bg-forest-700 text-cream-50 px-6 py-3.5 text-sm font-semibold transition-colors shadow-sm"
+                                                                            >
+                                                              {hero.primaryCta.label}
+                                                                            <span className="arrow-shift" aria-hidden>→</span>span>
+                                                            </Link>Link>
+                                                            <a
+                                                                              href={hero.secondaryCta.href}
+                                                                              className="inline-flex items-center gap-2 rounded-full border border-forest-900/20 text-forest-950 hover:bg-forest-950 hover:text-cream-50 px-6 py-3.5 text-sm font-semibold transition-colors"
+                                                                            >
+                                                              {hero.secondaryCta.label}
+                                                            </a>a>
+                                              </motion.div>motion.div>
+                                              <motion.ul
+                                                              initial={{ opacity: 0 }}
+                                                              animate={{ opacity: 1 }}
+                                                              transition={{ duration: 0.6, delay: 0.4 }}
+                                                              className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-6 text-sm text-forest-950/80"
+                                                            >
+                                                {[
+                                                                              "Fully insured",
+                                                                              "5-star rated",
+                                                                              "Free quotes",
+                                                                              "Local to Taunton",
+                                                                              "Safety-first",
+                                                                              "Direct contact with Mungo",
+                                                                            ].map((t) => (
+                                                                                              <li key={t} className="flex items-center gap-2">
+                                                                                                                <span className="h-1.5 w-1.5 rounded-full bg-forest-600" />
+                                                                                                {t}
+                                                                                                </li>li>
+                                                                                            ))}
+                                              </motion.ul>motion.ul>
+                                  </div>div>
+                        
+                          {/* Image */}
+                                  <motion.div
+                                                initial={{ opacity: 0, scale: 1.02 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                                                className="lg:col-span-6 relative"
+                                              >
+                                              <div className="relative aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] w-full rounded-2xl overflow-hidden ring-1 ring-forest-900/10 shadow-xl shadow-forest-950/10">
+                                                            <Image
+                                                                              src={hero.image.src}
+                                                                              alt={hero.image.alt}
+                                                                              fill
+                                                                              priority
+                                                                              sizes="(min-width: 1024px) 50vw, 100vw"
+                                                                              className="object-cover"
+                                                                            />
+                                                            <div className="absolute inset-0 bg-gradient-to-tr from-forest-950/30 via-transparent to-transparent" />
+                                                            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-cream-50">
+                                                                            <span className="text-[11px] uppercase tracking-[0.28em] bg-forest-950/60 backdrop-blur px-3 py-1.5 rounded-full">
+                                                                                              Real work · GB Contracting
+                                                                            </span>span>
+                                                            </div>div>
+                                              </div>div>
+                                  </motion.div>motion.div>
+                        </div>div>
+                </div>div>
+            {/* hairline */}
+                <div className="hairline mx-auto max-w-7xl" />
+          </section>section>
+        );
 }
+</section>

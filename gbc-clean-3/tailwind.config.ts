@@ -1,47 +1,52 @@
 import type { Config } from 'tailwindcss';
-import defaultTheme from 'tailwindcss/defaultTheme';
 
 const config: Config = {
-  darkMode: 'class',
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './app/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        wegrow: {
-          dark: '#081f16',
-          darker: '#04120c',
-          card: '#0c2e21',
-          lime: '#ccfc62',
-          limeHover: '#b5e350',
-          grey: '#d1d5db',
-        },
-        surface: {
-          DEFAULT: '#081f16',
-          light: '#0c2e21',
-          dark: '#04120c',
-        },
-      },
-      fontFamily: {
-        sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
-        serif: ['var(--font-playfair)', ...defaultTheme.fontFamily.serif],
-      },
-      backdropBlur: {
-        xs: '2px',
-      },
-      boxShadow: {
-        neumorph: '8px 8px 16px rgba(0,0,0,0.15), -8px -8px 16px rgba(255,255,255,0.1)',
-        neumorphInset: 'inset 4px 4px 8px rgba(0,0,0,0.12), inset -4px -4px 8px rgba(255,255,255,0.07)',
-      },
-      borderRadius: {
-        glass: '1rem',
-      },
+    content: [
+          './app/**/*.{js,ts,jsx,tsx,mdx}',
+          './components/**/*.{js,ts,jsx,tsx,mdx}',
+        ],
+    theme: {
+          extend: {
+                  colors: {
+                            forest: {
+                                        50: '#eef5f0',
+                                        100: '#d6e7dd',
+                                        200: '#aecfba',
+                                        300: '#80b196',
+                                        400: '#558f74',
+                                        500: '#357555',
+                                        600: '#2a6048',
+                                        700: '#1f4a36',
+                                        800: '#173728',
+                                        900: '#102a1d',
+                                        950: '#0b1f15',
+                            },
+                            moss: {
+                                        400: '#8aa953',
+                                        500: '#6b8e23',
+                            },
+                            charcoal: {
+                                        700: '#3a3a3a',
+                                        800: '#262626',
+                                        900: '#1a1a1a',
+                            },
+                            cream: {
+                                        50: '#faf7f0',
+                                        100: '#f3ede0',
+                                        200: '#e8dfc9',
+                            },
+                            stone: {
+                                        50: '#f7f5f1',
+                                        100: '#ecebe5',
+                            },
+                  },
+                  fontFamily: {
+                            display: ['var(--font-inter-tight)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                            sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                  },
+          },
     },
-  },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };
 
 export default config;
